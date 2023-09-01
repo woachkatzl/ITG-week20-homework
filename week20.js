@@ -5,11 +5,15 @@
 function makeOne() {
 	const resultOne = document.getElementById('result1');
 	//Блок try
-	functionWithErrors(); //Попытка вызова несуществующей функции
-	resultOne.textContent = 'Функция вызвана без ошибок';
+	try {
+		functionWithErrors(); //Попытка вызова несуществующей функции
+		resultOne.textContent = 'Функция вызвана без ошибок';
+	}
 	//Блок catch
-	resultOne.textContent = 'Ошибка была перехвачена: ' + error.message;
-	console.error('Ошибка была перехвачена:', error.message);
+	catch (error) {
+		resultOne.textContent = 'Ошибка была перехвачена: ' + error.message;
+		console.error('Ошибка была перехвачена:', error.message);
+	}
 }
 
 document.querySelector('.b-1').addEventListener('click', makeOne);
@@ -21,6 +25,14 @@ document.querySelector('.b-1').addEventListener('click', makeOne);
 function makeTwo() {
 	const resultTwo = document.getElementById('result2');
 	//Ваш код
+	try {
+		const e = "first";
+		//const e = "second";
+		// ОТВЕТ: try/catch не сработает для этой ошибки, потому что она синтаксическая. Ошибка возникает, когда JаvaScript в процессе парсинга скрипта.
+	} catch (error) {
+		resultTwo.textContent = "Ошибка: " + error.message;
+		console.error('Ошибка: ', error.message);
+	}
 }
 
 document.querySelector('.b-2').addEventListener('click', makeTwo);
@@ -33,6 +45,7 @@ function makeThree() {
 	const resultThree = document.getElementById('result3');
 	try {
 		//Ваш код
+		throw new Error("Woopsies ><");
 	} catch (error) {
 		resultThree.textContent = 'Ошибка была перехвачена: ' + error.message;
 		console.error('Ошибка была перехвачена:', error.message);
@@ -46,6 +59,12 @@ document.querySelector('.b-3').addEventListener('click', makeThree);
 
 function makeFour() {
 	//Ваш код
+	const result = document.getElementById('result4');
+	try {
+		throw new Error("Woopsies ><");
+	} catch (error) {
+		result.textContent = 5 * 2;
+	}
 }
 
 document.querySelector('.b-4').addEventListener('click', makeFour);
@@ -57,7 +76,8 @@ function makeFive() {
 	let inputData = -1;
 	if (inputData < 0)
 		//Ваш код
-		return inputData == 0 ? 1 : inputData * (inputData - 1);
+		//return inputData == 0 ? 1 : inputData * (inputData - 1);
+		throw new Error("The condition was not met");
 }
 
 document.querySelector('.b-5').addEventListener('click', makeFive);
@@ -68,6 +88,12 @@ document.querySelector('.b-5').addEventListener('click', makeFive);
 function makeSix() {
 	let inputData = -1;
 	//Ваш код
+	try {
+		if (inputData < 0)
+			throw new Error("The condition was not met");
+	} catch (error) {
+		console.log("Ошибка перехвачена");
+	}
 }
 
 document.querySelector('.b-6').addEventListener('click', makeSix);
@@ -79,6 +105,8 @@ function makeSeven() {
 	let dividend = 10;
 	let divisor = 0;
 	//Ваш код
+	if (divisor === 0)
+		throw new Error("Деление на ноль недопустимо");
 	return dividend / divisor;
 }
 
@@ -89,6 +117,16 @@ document.querySelector('.b-7').addEventListener('click', makeSeven);
 
 function makeEight() {
 	//Ваш код
+	let dividend = 10;
+	let divisor = 0;
+	try {
+		if (divisor === 0)
+			throw new Error("Деление на ноль недопустимо");
+		return dividend / divisor;
+	} catch (error) {
+		console.log("Ошибка:", error.message);
+	}
+
 }
 
 document.querySelector('.b-8').addEventListener('click', makeEight);
@@ -98,10 +136,16 @@ document.querySelector('.b-8').addEventListener('click', makeEight);
 
 function makeNine() {
 	//Тут добавляете try
-	let a = 22;
-	let c = a + d;
+	try {
+		let a = 22;
+		let c = a + d;
+	}
 	//Тут catch
 	//Вывод цифры в элемент
+	catch (error) {
+		const result = document.querySelector("#result9");
+		result.textContent = 1;
+	}
 }
 
 document.querySelector('.b-9').addEventListener('click', makeNine);
@@ -116,11 +160,15 @@ function makeTen() {
 	let email = 'example.com';
 	let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
-	if (!emailPattern.test(email)) {
-		throw 'Некорректный email-адрес';
-	}
+	try {
+		if (!emailPattern.test(email)) {
+			throw 'Некорректный email-адрес';
+		}
 
-	document.getElementById('.result7').textContent = 'Email-адрес корректен';
+		document.getElementById('result10').textContent = 'Email-адрес корректен';
+	} catch (error) {
+		document.getElementById('result10').textContent = "Ошибка: " + error;
+	}
 }
 
 document.querySelector('.b-10').addEventListener('click', makeTen);
@@ -134,6 +182,8 @@ function makeEleven() {
 		throw new Error('Телефонный номер должен состоять только из цифр');
 	}
 	//Ваш код
+	if (phoneNumber.length < 10)
+		throw new Error("Некорректная длина телефонного номера");
 	console.log('Телефонный номер корректен');
 }
 
@@ -147,8 +197,10 @@ function makeTwelve() {
 	let age = 12;
 	if (age < 18) {
 		//Ваш код
+		throw new Error("Доступ запрещен для лиц младше 18 лет");
 	} else {
 		//Ваш код
+		document.querySelector("#result12").textContent = "Доступ разрешен";
 	}
 }
 
@@ -160,6 +212,17 @@ document.querySelector('.b-12').addEventListener('click', makeTwelve);
 function makeThirteen() {
 	let age = 10;
 	//Ваш код
+	try {
+		if (age < 18) {
+			//Ваш код
+			throw new Error("Доступ запрещен для лиц младше 18 лет");
+		} else {
+			//Ваш код
+			document.querySelector("#result13").textContent = "Доступ разрешен";
+		}
+	} catch (error) {
+		document.querySelector("#result13").textContent = error.message;
+	}
 }
 
 document.querySelector('.b-13').addEventListener('click', makeThirteen);
@@ -173,10 +236,17 @@ document.querySelector('.b-13').addEventListener('click', makeThirteen);
 
 function makeFourteen() {
 	let discount = 51;
-	if (discount < 0 || discount > 50) {
-		//Ваш код
+	//Ваш код
+	try {
+		if (discount < 0 || discount > 50) {
+			//Ваш код
+			throw new Error("Некорректное значение скидки");
+		}
+		console.log('Ваша скидка', discount + "%!");
+	} catch (error) {
+		console.log(error.message);
 	}
-	console.log('Замените текст');
+
 }
 
 document.querySelector('.b-14').addEventListener('click', makeFourteen);
@@ -189,8 +259,10 @@ function makeFifteen(a, func) {
 	const resultFifteen = document.getElementById('result15');
 	try {
 		//Ваш код
+		func(a);
 	} catch (error) {
 		//Ваш код
+		resultFifteen.textContent = error.name;
 	}
 }
 
@@ -203,6 +275,11 @@ document.querySelector('.b-15').addEventListener('click', makeFifteen);
 function makeSixteen(n, func) {
 	const resultSixteen = document.getElementById('result16');
 	//Ваш код
+	try {
+		func(n);
+	} catch (error) {
+		resultSixteen.textContent = error.message;
+	}
 }
 
 document.querySelector('.b-16').addEventListener('click', makeSixteen);
@@ -214,6 +291,11 @@ document.querySelector('.b-16').addEventListener('click', makeSixteen);
 function makeSeventeen(str, func) {
 	const resultSeventeen = document.getElementById('result17');
 	//Ваш код
+	try {
+		func(str);
+	} catch (error) {
+		resultSeventeen.textContent = error.message;
+	}
 }
 
 // добавьте слушатель события
@@ -228,15 +310,22 @@ function makeEighteen() {
 	const forWordFinally = document.getElementById('result18a');
 	//Блок try
 	//Некорректная операция деления для примера, может вызвать ошибку
-	if (true) {
-		throw new Error('Division by zero');
+	try {
+		if (true) {
+			throw new Error('Division by zero');
+		}
+		const result = 12 / 0;
+		resultEighteen.textContent = result;
 	}
-	const result = 12 / 0;
-	resultEighteen.textContent = result;
 	//Блок catch (error)
-	console.error(error); //Вывод ошибки в консоль
-	resultEighteen.textContent = '0'; //Вывод '0' при ошибке
+	catch (error) {
+		console.error(error); //Вывод ошибки в консоль
+		resultEighteen.textContent = '0'; //Вывод '0' при ошибке
+	}
 	//Блок finally
+	finally {
+		forWordFinally.textContent = "finally";
+	}
 }
 
 document.querySelector('.b-18').addEventListener('click', makeEighteen);
@@ -247,14 +336,23 @@ document.querySelector('.b-18').addEventListener('click', makeEighteen);
 
 function makeNineteen() {
 	const resultNineteen = document.getElementById('result19');
+	const resultNineteenA = document.getElementById('result19a');
 	//Блок try
 	const arr = [1, 2, 3];
-	const sum = arr.reduce((acc, val) => acc + val, 0);
-	resultNineteen.textContent = sum;
+	try {
+		const sum = arr.reduce((acc, val) => acc + val, 0);
+		resultNineteen.textContent = sum;
+	}
 	//Блок catch (error)
-	console.error(error); //Вывод ошибки в консоль
+	catch (error) {
+		console.error(error); //Вывод ошибки в консоль
+		resultNineteen.textContent = "Ошибка";
+	}
 	//Ваш код
 	//Блок finally
+	finally {
+		resultNineteenA.textContent = "finally19";
+	}
 }
 
 document.querySelector('.b-19').addEventListener('click', makeNineteen);
@@ -272,6 +370,15 @@ function calculateValue() {
 
 function makeTwenty() {
 	//Ваш код
+	const result = document.getElementById('result20');
+	const resultFinally = document.getElementById('result20a');
+	try {
+		result.textContent = calculateValue();
+	} catch (error) {
+		result.textContent = "Ошибка";
+	} finally {
+		resultFinally.textContent = "finally20";
+	}
 }
 
 // добавьте слушатель события
@@ -290,6 +397,15 @@ function fetchData() {
 
 function makeTwentyOne() {
 	//Ваш код
+	const result21 = document.querySelector("#result21");
+	const result21finally = document.querySelector("#result21a");
+	try {
+		result21.textContent = fetchData();
+	} catch (error) {
+		result21.textContent = error.message;
+	} finally {
+		result21finally.textContent = "finally21";
+	}
 }
 
 // добавьте слушатель события
@@ -303,12 +419,16 @@ const json = '{ некорректный JSON }';
 function makeTwentyTwo() {
 	const resultTwentyTwo = document.getElementById('result22');
 	//Блок try
-	let user = JSON.parse(json); //Возникает ошибка
-	console.log(user.name); //Не сработает
+	try {
+		let user = JSON.parse(json); //Возникает ошибка
+		console.log(user.name); //Не сработает
+	}
 	//Блок catch (e)
-	resultTwentyTwo.textContent = 'Извините, в данных ошибка, мы попробуем получить их ещё раз.';
-	console.log(e.name);
-	console.log(e.message);
+	catch (e) {
+		resultTwentyTwo.textContent = 'Извините, в данных ошибка, мы попробуем получить их ещё раз.';
+		console.log(e.name);
+		console.log(e.message);
+	}
 }
 
 document.querySelector('.b-22').addEventListener('click', makeTwentyTwo);
@@ -322,6 +442,13 @@ const jsonTwentyThree = '{ некорректный JSON }';
 function makeTwentyThree() {
 	const resultTwentyThree = document.getElementById('result23');
 	//Ваш код
+	try {
+		let user = JSON.parse(json);
+	}
+	//Блок catch (e)
+	catch (e) {
+		resultTwentyThree.textContent = 'Извините, в данных ошибка, мы попробуем получить их ещё раз.';
+	}
 }
 
 // Добавьте слушатель события
@@ -334,13 +461,19 @@ document.querySelector('.b-23').addEventListener('click', makeTwentyThree);
 function makeTwentyFour() {
 	const resultTwentyFour = document.getElementById('result24');
 	//Блок try
-	let divisor = 0;
-	if (divisor === 0) {
-		//Ваш код
+	try {
+		let divisor = 0;
+		if (divisor === 0) {
+			//Ваш код
+			throw new Error("Деление на ноль недопустимо");
+		}
+		let result = 24 / divisor;
+		return result;
 	}
-	let result = 24 / divisor;
-	return result;
 	//Блок catch (error)
+	catch (error) {
+		resultTwentyFour.textContent = error.message;
+	}
 }
 
 document.querySelector('.b-24').addEventListener('click', makeTwentyFour);
@@ -352,12 +485,17 @@ document.querySelector('.b-24').addEventListener('click', makeTwentyFour);
 function makeTwentyFive() {
 	const resultTwentyFive = document.getElementById('result25');
 	//Блок try
-	const randomValue = Math.random();
-	if (randomValue <= 0.9) {
-		throw new Error('Искусственная ошибка');
+	try {
+		const randomValue = Math.random();
+		if (randomValue <= 0.9) {
+			throw new Error('Искусственная ошибка');
+		}
+		resultTwentyFive.textContent = 'Операция успешно выполнена';
 	}
-	resultTwentyFive.textContent = 'Операция успешно выполнена';
 	//Блок catch (error)
+	catch (error) {
+		resultTwentyFive.textContent = "Произошла ошибка";
+	}
 }
 
 document.querySelector('.b-25').addEventListener('click', makeTwentyFive);
@@ -370,7 +508,11 @@ function makeTwentySix() {
 	const resultTwentySix = document.getElementById('result26');
 	//Блок try
 	setTimeout(() => {
-		noSuchVariable; //Попытка обратиться к несуществующей переменной
+		try {
+			noSuchVariable; //Попытка обратиться к несуществующей переменной
+		} catch (error) {
+			resultTwentySix.textContent = "Произошла ошибка, переменная не существует.";
+		}
 	}, 1000);
 	//Блок catch (error)
 }
@@ -395,16 +537,18 @@ function simulateAsyncOperation() {
 
 //Добавить название функции и ключевое слово async
 //Подумайте, в каком месте нужно добавить await
-// resultTwentySeven.textContent = 'Ожидание...';
-// try {
-// 	const result = simulateAsyncOperation();
-// 	resultTwentySeven.textContent = 'Результат: ' + result;
-// } catch (error) {
-// 	resultTwentySeven.textContent = 'Произошла ошибка: ' + error.message;
-// 	console.error(error.name);
-// }
+async function makeTwentySeven() {
+	resultTwentySeven.textContent = 'Ожидание...';
+	try {
+		const result = await simulateAsyncOperation();
+		resultTwentySeven.textContent = 'Результат: ' + result;
+	} catch (error) {
+		resultTwentySeven.textContent = 'Произошла ошибка: ' + error.message;
+		console.error(error.name);
+	}
+}
 
-// document.querySelector('.b-27').addEventListener('click', makeTwentySeven);
+document.querySelector('.b-27').addEventListener('click', makeTwentySeven);
 
 //Задание 28
 //Создайте функцию makeTwentyEight, которая содержит код с использованием Promise.reject и setTimeout,
@@ -433,6 +577,8 @@ function makeTwentyEight() {
 	}
 }
 
+//КОМЕНТАРИЙ: не поняла задание, и что именно нужно было изменить в этом коде?
+
 document.querySelector('.b-28').addEventListener('click', makeTwentyEight);
 
 //Задание 29
@@ -441,12 +587,16 @@ document.querySelector('.b-28').addEventListener('click', makeTwentyEight);
 
 const resultTwentyNine = document.getElementById('result29');
 
-function handlePromise() {
+async function handlePromise() {
 	//Блок try
-	Promise.reject('это точно ошибка');
+	try {
+		const result = await Promise.reject('это точно ошибка');
+	}
 	//Блок catch (e)
-	resultTwentyNine.textContent = 'Ошибка перехвачена: ' + e;
-	console.log(e); //err
+	catch (e) {
+		resultTwentyNine.textContent = 'Ошибка перехвачена: ' + e;
+		console.log(e); //err
+	}
 }
 
 function makeTwentyNine() {
@@ -458,6 +608,8 @@ document.querySelector('.b-29').addEventListener('click', makeTwentyNine);
 //Задание 30
 //Выполнение функции упадёт в блок catch?
 //Ответ будет доступен при нажатии на кнопку "Узнать ответ"
+
+//ОТВЕТ: нет, не упадёт.
 
 function makeThirty() {
 	const resultTwentyThirty = document.getElementById('result30');
