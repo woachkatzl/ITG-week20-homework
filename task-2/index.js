@@ -44,7 +44,6 @@ const launchSwapi = async (event) => {
     const category = categoryInput.value;
     const entity = entityInput.value;
 
-    //resultContainer.textContent = "Подождите, идёт загрузка...";
     watingArt.classList.toggle("waiting");
 
     try {
@@ -55,18 +54,16 @@ const launchSwapi = async (event) => {
         else {
             const resultObject = await response.json();
             const searchResult = resultObject.name || resultObject.title;
-            //resultContainer.textContent = "";
-            watingArt.classList.toggle("waiting");
+
             postResult(searchResult);
         }
     }
     catch (error) {
         console.log(error);
-        //resultContainer.textContent = "";
-        watingArt.classList.toggle("waiting");
         displayError(error.message);
     }
     finally {
+        watingArt.classList.toggle("waiting");
         categoryInput.selectedIndex = 0;
         entityInput.selectedIndex = 0;
     }
